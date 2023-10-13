@@ -1,0 +1,32 @@
+<%= form_with(model: user_on_task) do |form| %>
+  <% if user_on_task.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user_on_task.errors.count, "error") %> prohibited this user_on_task from being saved:</h2>
+
+      <ul>
+        <% user_on_task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :task_id, style: "display: block" %>
+    <%= form.number_field :task_id %>
+  </div>
+
+  <div>
+    <%= form.label :group_id, style: "display: block" %>
+    <%= form.number_field :group_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

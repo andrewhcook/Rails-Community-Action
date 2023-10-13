@@ -1,0 +1,32 @@
+<div id="<%= dom_id group %>">
+  <p>
+    <strong>Creator:</strong>
+    <%= group.creator_id %>
+  </p>
+
+  <p>
+    <strong>Mission statement:</strong>
+    <%= group.mission_statement %>
+  </p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= group.title %>
+  </p>
+
+  <p>
+    <strong>Private:</strong>
+    <%= group.private %>
+  </p>
+
+
+  <p>
+  <strong> Users in group: </strong>
+    <ul>
+    <% UserInGroup.where(:group_id => group.id).all.each do |user_in_group|%>
+    <li> <%= User.where(:id => user_in_group.user_id).first.email  %>  </li>
+    <%end%>
+    </ul>
+  </p>
+
+</div>
