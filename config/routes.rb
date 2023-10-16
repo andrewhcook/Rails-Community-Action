@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
+  devise_for :users, { :skip => [:sessions, :registrations] }
+  as :user do
+    get '/sign_in', { :to => 'devise/sessions#new', :as => :new_user_session }
+    post '/sign_in', { :to => 'devise/sessions#create', :as => :user_session }
+
+    get '/sign_up', { :to => 'devise/registrations#new', :as => :new_user_registration }
+    post '/sign_up', { :to => 'devise/registrations#create', :as => :user_registration }
+
+    delete '/logout', { :to => 'devise/sessions#destroy', :as => :destroy_user_session }
+  end
+
   resources :users
+
   resources :user_on_tasks
   # Routes for the User on task resource:
   root "groups#index"
@@ -19,7 +31,6 @@ Rails.application.routes.draw do
   get("/delete_user_on_task/:path_id", { :controller => "user_on_tasks", :action => "destroy" })
 
   #LOGOUT
-  post("/logout", controller: "users", action: "destroy_user_session" )
 
   #------------------------------
 

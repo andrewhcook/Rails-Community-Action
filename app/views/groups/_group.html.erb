@@ -29,4 +29,25 @@
     </ul>
   </p>
 
+
+  <p> 
+  <strong> Tasks in Group: </strong>
+  <% Task.where(:group_id => group.id).all.each do |task|%>
+  <ul>
+  <li>
+  Task Name: <%= task.name%>
+  </li>
+
+  <li>
+  leader_id: <%= task.leader_id%>
+  </li>
+
+  <li>
+  description <%= task.description%>
+  </li>
+
+  </ul>
+  <% end %>
+  </p>
+
 </div>

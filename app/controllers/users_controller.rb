@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    
   end
 
   # GET /users/new
@@ -56,10 +57,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy_user_session
-    session.store(:user_id, nil)
-    return redirect_to("/")
-  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
