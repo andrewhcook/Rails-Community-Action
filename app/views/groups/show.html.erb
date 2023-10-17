@@ -2,9 +2,10 @@
 
 <%= render @group %>
 
-<div>
-  <%= link_to "Edit this group", edit_group_path(@group) %> 
-  <%= link_to "Back to groups", groups_path %>
+<ul class= "nav justify-content-center">
+<li class="nav-item">
+  <%= link_to "Edit this group", edit_group_path(@group), class: "nav-link" %> </li>
+  <li class="nav-item"> <%= link_to "Back to groups", groups_path, class: "nav-link" %> </li>
 
-  <%= button_to "Destroy this group", @group, method: :delete %>
-</div>
+  <li class="nav-item"> <%= button_to "Destroy this group", @group, method: :delete, class: "nav-link" %> </li>
+</ul>

@@ -1,53 +1,51 @@
-<div id="<%= dom_id group %>">
-  <p>
+<div class = "card" id="<%= dom_id group %>">
+<div class = "card-body">
+  <p class = "card-text" >
     <strong>Creator:</strong>
-    <%= group.creator_id %>
+    <%= User.find(group.creator_id).username %>
   </p>
 
-  <p>
+  <p class = "card-text">
     <strong>Mission statement:</strong>
     <%= group.mission_statement %>
   </p>
 
-  <p>
+  <p class = "card-text">
     <strong>Title:</strong>
     <%= group.title %>
   </p>
 
-  <p>
+  <p class = "card-text">
     <strong>Private:</strong>
     <%= group.private %>
   </p>
 
-
-  <p>
-  <strong> Users in group: </strong>
+  <p class = "card">
+    <strong > <div class = "card-title"> Users in group: </div> </strong>
     <ul>
-    <% UserInGroup.where(:group_id => group.id).all.each do |user_in_group|%>
-    <li> <%= User.where(:id => user_in_group.user_id).first.email  %>  </li>
-    <%end%>
+      <% UserInGroup.where(:group_id => group.id).all.each do |user_in_group|%>
+        <li class = "card-text"> <%= User.where(:id => user_in_group.user_id).first.email  %>  </li>
+      <%end%>
     </ul>
   </p>
 
+    <strong> Tasks in Group: </strong>
+    <% Task.where(:group_id => group.id).all.each do |task|%>
+  <p class = "card">
+      <strong>
+       <div class = "card-title"> Task Name: <%= task.name%> </div>
+      </strong>
+      <ul class = "card-body" >
+        <li class = "card-text">
+          leader name: <%= User.find(task.leader_id).username%>
+        </li>
 
-  <p> 
-  <strong> Tasks in Group: </strong>
-  <% Task.where(:group_id => group.id).all.each do |task|%>
-  <ul>
-  <li>
-  Task Name: <%= task.name%>
-  </li>
+        <li class = "card-text">
+          description: <p> <%= task.description%> </p>
+        </li>
 
-  <li>
-  leader_id: <%= task.leader_id%>
-  </li>
-
-  <li>
-  description <%= task.description%>
-  </li>
-
-  </ul>
-  <% end %>
+      </ul>
   </p>
-
+    <% end %>
+</div>
 </div>
