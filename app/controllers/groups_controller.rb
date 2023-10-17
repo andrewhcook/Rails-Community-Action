@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[ show edit update destroy ]
-
+  before_action :ensure_user_is_authorized, except: [:index]
   # GET /groups or /groups.json
   def index
     @groups = Group.all
@@ -8,7 +8,6 @@ class GroupsController < ApplicationController
 
   # GET /groups/1 or /groups/1.json
   def show
-    
   end
 
   # GET /groups/new
@@ -59,13 +58,21 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def group_params
-      params.require(:group).permit(:creator_id, :mission_statement, :title, :private)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def group_params
+    params.require(:group).permit(:creator_id, :mission_statement, :title, :private)
+  end
+
+  def ensure_user_is_authorized
+    set_group
+    if !GroupPolicy.new(current_user, @group).show?
+      redirect_back fallback_location: root_url
     end
+  end
 end
