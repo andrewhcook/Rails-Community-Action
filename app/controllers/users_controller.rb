@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  before_action :ensure_user_is_authorized, only: [:destroy]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    
   end
 
   # GET /users/new
@@ -57,15 +56,30 @@ class UsersController < ApplicationController
     end
   end
 
-  
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:username, :avatar_url, :contact_info, :inspirational_quote, :bio, :email)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:username, :avatar_url, :contact_info, :inspirational_quote, :bio, :email)
+  end
+
+  private
+
+  def authenticate_user
+    if session.fetch("user_id").nil?
+      redirect_to new_session_path
     end
+  end
+
+  def ensure_user_is_authorized
+    set_user
+    if current_user.id != @user.id
+      redirect_back fallback_location: root_url
+    end
+  end
 end

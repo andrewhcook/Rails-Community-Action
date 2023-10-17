@@ -9,8 +9,8 @@
     <div class = "card-body"> 
       <strong class = "card-title"> <%= group.title %> </strong>
       <ul class = "card-body" >
-        <li class = > Creator:  <%= User.find(group.creator_id).username %> </li>
-        <li class = > <%= group.mission_statement %> </li>
+        <li class = "card-text" > Creator:  <%= User.find(group.creator_id).username %> </li>
+        <li class = "card-text" > <%= group.mission_statement %> </li>
       </ul>
       <p>
         <%= link_to "Show this group", group, class: "nav-link" %>

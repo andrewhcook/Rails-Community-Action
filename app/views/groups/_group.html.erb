@@ -25,7 +25,9 @@
     <strong > <div class = "card-title"> Users in group: </div> </strong>
     <ul>
       <% UserInGroup.where(:group_id => group.id).all.each do |user_in_group|%>
-        <li class = "card-text"> <%= User.where(:id => user_in_group.user_id).first.email  %>  </li>
+      <% user = User.where(:id => user_in_group.user_id).first %>
+        <li class = "card-text"> <%= user.email  %>  </li>
+        <%= link_to "Show this user", user %>
       <%end%>
     </ul>
   </p>
@@ -38,7 +40,9 @@
       </strong>
       <ul class = "card-body" >
         <li class = "card-text">
-          leader name: <%= User.find(task.leader_id).username%>
+        <% user = User.find(task.leader_id)%>
+          leader name: <%= user.username%>
+          
         </li>
 
         <li class = "card-text">
