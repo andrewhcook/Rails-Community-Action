@@ -15,9 +15,11 @@ task({ :sample_data => :environment }) do
 
   25.times do
     user = User.new
-    user.email = "#{Faker::Name.first_name}@example.com"
+    name = Faker::Name.first_name
+    user.email = "#{name}@example.com"
     user.password = "password"
     user.inspirational_quote = Faker::Quotes::Shakespeare.romeo_and_juliet_quote
+    user.username = "#{name}"
     user.save
 
     group = Group.new
