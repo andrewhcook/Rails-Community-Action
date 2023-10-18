@@ -5,6 +5,8 @@ class UserPolicy
     @user = user 
   end
 
-  
+  def show?
+    false
+  end
 
 end

@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[ show edit update destroy ]
-  before_action :ensure_user_is_authorized, except: [:index]
+  before_action :ensure_user_is_authorized, except: [:index, :new]
+  before_action :ensure_user_is_authenticated, only: [:new]
   # GET /groups or /groups.json
   def index
     @groups = Group.all
@@ -72,6 +73,12 @@ class GroupsController < ApplicationController
   def ensure_user_is_authorized
     set_group
     if !GroupPolicy.new(current_user, @group).show?
+      redirect_back fallback_location: root_url
+    end
+  end
+
+  def ensure_user_is_authenticated
+    if !GroupPolicy.new(current_user, @group).user_signed_in?
       redirect_back fallback_location: root_url
     end
   end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :ensure_user_is_authorized, only: [:destroy]
+  before_action :ensure_user_is_authorized, only: [:destroy, :edit]
+  before_action :block_users_index, only: [:index]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -78,7 +79,18 @@ class UsersController < ApplicationController
 
   def ensure_user_is_authorized
     set_user
+    if current_user.nil?
+      redirect_back fallback_location: root_url
+      return
+    end
     if current_user.id != @user.id
+      redirect_back fallback_location: root_url
+    end
+  end
+
+
+  def block_users_index
+    if !UserPolicy.new(@user).show?
       redirect_back fallback_location: root_url
     end
   end
