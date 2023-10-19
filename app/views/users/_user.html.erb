@@ -29,4 +29,14 @@
     <%= user.email %>
   </p>
 
+
+<strong> User's tasks </strong>
+<% user_tasks = UserOnTask.all.where(:user_id => user.id) %>
+<% user_tasks.each do |user_task|%>
+
+<% task = Task.find(user_task.task_id)%>
+<p>
+<%=  render task, class:"card-text" %>
+</p>
+<%end%>
 </div>
