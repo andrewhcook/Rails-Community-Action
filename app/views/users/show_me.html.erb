@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+<% id = current_user.fetch("id") %>
+<% @user = User.find(id)%>
+<%= render @user %>
+<% user_in_groups = UserInGroup.where(:user_id => id).all %>
+<% @groups = [] %>
+<% user_in_groups.each do |user_in_group| %>
+<% group = Group.find(user_in_group.group_id) %>
+ <% @groups.push(group) %>
+<%end%>
+
+
+<% @groups.each do |group|%>
+<%= render group %>
+<% end %>
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user.id) %>
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>

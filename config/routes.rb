@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     post '/sign_up', { :to => 'devise/registrations#create', :as => :user_registration }
 
     delete '/logout', { :to => 'devise/sessions#destroy', :as => :destroy_user_session }
+
+    get '/me', {:controller => 'users', :action => 'show_me'}
   end
+
+  
 
   resources :users
 

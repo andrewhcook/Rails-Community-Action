@@ -57,6 +57,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def show_me
+    if !current_user.nil?
+    render "show_me"
+    else 
+    redirect_back fallback_location: root_url
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -87,7 +95,6 @@ class UsersController < ApplicationController
       redirect_back fallback_location: root_url
     end
   end
-
 
   def block_users_index
     if !UserPolicy.new(@user).show?
